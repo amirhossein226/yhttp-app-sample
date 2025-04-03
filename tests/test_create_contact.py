@@ -8,7 +8,7 @@ def test_create_contact(Given):
         'phone': '09199199191'
     }
 
-    with Given('/contacts/', verb='POST', form=data):
+    with Given('/contacts', verb='CREATE', form=data):
         assert status == 201
         assert response.json == {
             'name': 'Amir',
@@ -31,7 +31,8 @@ def test_create_contact(Given):
         when(form={})
         assert status == '400 name: Required'
 
-    with Given('/contacts/', verb='GET'):
-        assert status == 200
-        assert len(response.json) == 1
+    with Given('/contacts', verb='CREATE', form=data):
+        assert status == 409
 
+    with Given('/contacts/', verb='CREATE', form=data):
+        assert status == 405

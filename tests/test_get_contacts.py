@@ -28,7 +28,7 @@ def test_get_contact(Given):
             session.add_all(contacts)
             session.commit()
 
-    with Given('/contacts', 'GET'):
+    with Given('/contacts/', 'GET'):
         assert status == 200
         assert response.json == []
 

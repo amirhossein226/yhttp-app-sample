@@ -5,14 +5,14 @@ from .rollup import app
 from sqlalchemy import select
 
 
-@app.route(r'/contacts(/\d+)?/?')
+@app.route(r'/contacts/(\d+)?')
 @json
 @statuscode(statuses.ok)
 def get(req, contact_id=None):
 
     with app.db.session() as session:
         if contact_id:
-            contact_id = int(contact_id.replace('/', ''))
+            contact_id = int(contact_id)
             contact = session.get(Contacts, contact_id)
 
             if not contact:
@@ -28,8 +28,8 @@ def get(req, contact_id=None):
             return result
 
 
-@app.route(r'/contacts/?')
-@app.bodyguard(fields=(
+@app.route(r'/contacts')
+@app.bodyguard(strict=False, fields=(
     g.String('name', length=(1, 100)),
     g.String('email', length=(1, 254)),
     g.String('phone',
@@ -37,7 +37,7 @@ def get(req, contact_id=None):
              pattern=r'^(\+98|0098|0)?[ -]?(9\d{2})[ -]?\d{3}[ -]?\d{4}$')))
 @json
 @statuscode(statuses.created)
-def post(req):
+def create(req):
     data = req.getform()
 
     try:
@@ -51,3 +51,5 @@ def post(req):
 
     except DuplicateObjectError:
         raise statuses.conflict()
+
+    return {'message': 'something went wrong'}
