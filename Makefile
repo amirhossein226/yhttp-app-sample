@@ -1,5 +1,5 @@
-PKG_NAMESPACE = yhttp.boilerplate
-PKG_NAME = yhttp-boilerplate
+PKG_NAMESPACE = yhttp.bee
+PKG_NAME = bee
 PYTEST_FLAGS = -vv
 PYDEPS_COMMON = \
 	'coveralls' \
@@ -29,4 +29,4 @@ YHTTP_FLAGS = \
 
 
 serve:
-	$(PREFIX)/bin/yhttp-boilerplate $(YHTTP_FLAGS) serve
+	$(PREFIX)/bin/bee $(YHTTP_FLAGS) serve

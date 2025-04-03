@@ -1,11 +1,16 @@
 from yhttp.core import Application
-
+from yhttp.ext import sqlalchemy as saext, dbmanager
+from .models import Base
+from .cli.insert_mockup import InsertMockData
 
 app = Application()
 
 
 # Add builtin settings here
 app.settings.merge('''
+db:
+  url: postgresql://postgres:postgres@localhost/bee
+
 auth:
   redis:
     host: localhost
@@ -26,6 +31,11 @@ auth:
     domain: example.com
 ''')
 
+dbmanager.install(app, cliarguments=[
+    InsertMockData
+])
+
+saext.install(app, Base)
 
 @app.when
 def ready(app):
