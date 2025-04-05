@@ -1,33 +1,7 @@
 from bddrest import status, response, when
 
-from yhttp.bee.models import Contacts
-from yhttp.bee import app
 
-
-def test_get_contact(Given):
-
-    def mockup():
-        with app.db.session() as session:
-            contacts = [
-                Contacts(
-                    name='David',
-                    email='david@gmail.com',
-                    phone='+09 453 3344'
-                ),
-                Contacts(
-                    name='Milad',
-                    email='milad@gmail.com',
-                    phone='+98 912 222 3434'
-                ),
-                Contacts(
-                    name='Niki',
-                    email='niki@gmail.com',
-                    phone='+74 98982333'
-                )
-            ]
-            session.add_all(contacts)
-            session.commit()
-
+def test_get_contact(Given, mockup):
     with Given('/contacts/', 'GET'):
         assert status == 200
         assert response.json == []

@@ -45,11 +45,34 @@ def create(req):
             name=data['name'],
             email=data['email'],
             phone=data['phone'],
-            overwrite=False
         )
         return contact
 
     except DuplicateObjectError:
         raise statuses.conflict()
 
-    return {'message': 'something went wrong'}
+    return contact
+
+
+@app.route(r'/contacts/(\d+)?')
+@json
+@statuscode(statuses.ok)
+def update(req, contact_id):
+    with app.db.session() as session:
+        c = session.get(Contacts, int(contact_id))
+
+    if not c:
+        return statuses.notfound()
+    data = req.getform()
+
+    try:
+        contact = Contacts.update(
+            id=int(contact_id),
+            **data
+        )
+    except DuplicateObjectError:
+        raise statuses.status(
+            409, f'The object with name {data["name"]} already exists!'
+        )
+
+    return contact

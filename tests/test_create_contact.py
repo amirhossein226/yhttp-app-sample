@@ -35,4 +35,4 @@ def test_create_contact(Given):
         assert status == 409
 
     with Given('/contacts/', verb='CREATE', form=data):
-        assert status == 405
+        assert status == 404

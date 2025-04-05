@@ -8,10 +8,6 @@ class DuplicateObjectError(Exception):
     pass
 
 
-class ObjectNotFound(Exception):
-    pass
-
-
 class Base(DeclarativeBase):
     pass
 
@@ -45,17 +41,11 @@ class Contacts(Base):
         default=dt.datetime.now(dt.UTC))
 
     @classmethod
-    def create(cls, name, email, phone):
+    def create(cls, name, email, phone, id=None, overwrite=False):
         from .rollup import app
         with app.db.session() as session:
-            contact = session.scalar(select(cls).where(cls.name == name))
-
-            if contact:
-                raise DuplicateObjectError(
-                    f'The object with name `{name}` already exists!'
-                )
-
-            else:
+            contact = session.scalar(select(cls).where(cls.id == id))
+            if not contact:
                 contact = cls(
                     name=name,
                     email=email,
@@ -64,31 +54,14 @@ class Contacts(Base):
                 session.add(contact)
                 session.commit()
 
-                return contact.to_dict()
-
-    @classmethod
-    def update(cls, id, **data):
-        from .rollup import app
-
-        with app.db.session() as session:
-            contact = session.get(cls, id)
-            if not contact:
-                raise ObjectNotFound('Object not exists!')
-
-            if data.get('name'):
-                conflict_contact = session.scalar(
-                    select(cls)\
-                    .where(cls.id != id)\
-                    .where(cls.name == data['name'])
+            elif not overwrite:
+                raise DuplicateObjectError(
+                    f'The object already exists: {name}'
                 )
 
-                if conflict_contact:
-                    raise DuplicateObjectError(
-                        f'The object with name `{data['name']}` already exists!'
-                    )
-            contact.name = data.get('name') or contact.name
-            contact.email = data.get('email') or contact.email
-            contact.phone = data.get('phone') or contact.phone
-            session.commit()
-
+            else:
+                contact.name = name
+                contact.email = email
+                contact.phone = phone
+                session.commit()
             return contact.to_dict()
