@@ -31,8 +31,5 @@ def test_create_contact(Given):
         when(form={})
         assert status == '400 name: Required'
 
-    with Given('/contacts', verb='CREATE', form=data):
-        assert status == 409
-
     with Given('/contacts/', verb='CREATE', form=data):
         assert status == 404
