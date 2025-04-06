@@ -19,4 +19,3 @@ class InsertMockData(easycli.SubCommand):
                 )
                 session.add(contact)
                 session.commit()
-

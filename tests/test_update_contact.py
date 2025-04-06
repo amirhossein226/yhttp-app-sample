@@ -21,7 +21,7 @@ def test_update_contact(Given, mockup):
             'phone': '0912 222 2222'
         }
 
-        when(form = given - 'name')
+        when(form=given - 'name')
         assert status == 200
 
     with Given('/contacts/1', verb='update', form=data):

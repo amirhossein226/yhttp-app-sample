@@ -38,7 +38,7 @@ class Contacts(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True)
     email: Mapped[str] = mapped_column(String(254))
-    phone:  Mapped[str] = mapped_column(String(20))
+    phone: Mapped[str] = mapped_column(String(20))
     created_at: Mapped[dt.datetime] = mapped_column(
         default=dt.datetime.now(dt.UTC))
     updated_at: Mapped[dt.datetime] = mapped_column(
@@ -77,14 +77,15 @@ class Contacts(Base):
 
             if data.get('name'):
                 conflict_contact = session.scalar(
-                    select(cls)\
-                    .where(cls.id != id)\
+                    select(cls)
+                    .where(cls.id != id)
                     .where(cls.name == data['name'])
                 )
 
                 if conflict_contact:
                     raise DuplicateObjectError(
-                        f'The object with name `{data['name']}` already exists!'
+                        f'The object with name \
+`{data["name"]}` already exists!'
                     )
             contact.name = data.get('name') or contact.name
             contact.email = data.get('email') or contact.email
@@ -92,3 +93,17 @@ class Contacts(Base):
             session.commit()
 
             return contact.to_dict()
+
+    @classmethod
+    def delete(cls, id):
+        from .rollup import app
+
+        with app.db.session() as session:
+
+            obj_to_delete = session.get(cls, id)
+            print(obj_to_delete, '+++++++++++++++++++++++++++++++++++++++++++')
+            if not obj_to_delete:
+                raise ObjectNotFound
+
+            session.delete(obj_to_delete)
+            session.commit()

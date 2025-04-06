@@ -37,6 +37,7 @@ dbmanager.install(app, cliarguments=[
 
 saext.install(app, Base)
 
+
 @app.when
 def ready(app):
     from . import __version__

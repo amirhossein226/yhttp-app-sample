@@ -1,5 +1,5 @@
-from yhttp.core import json, statuscode, statuses, guard as g
-from .models import Contacts, DuplicateObjectError
+from yhttp.core import json, text, statuscode, statuses, guard as g
+from .models import Contacts, DuplicateObjectError, ObjectNotFound
 from .rollup import app
 
 from sqlalchemy import select
@@ -76,3 +76,13 @@ def update(req, contact_id):
         )
 
     return contact
+
+
+@app.route(r'/contacts/(\d+)?')
+@text
+@statuscode(statuses.nocontent)
+def delete(req, contact_id):
+    try:
+        Contacts.delete(int(contact_id))
+    except ObjectNotFound:
+        raise statuses.notfound()
