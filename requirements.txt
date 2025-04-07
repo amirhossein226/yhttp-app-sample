@@ -2,7 +2,7 @@ argcomplete==3.6.2
 asttokens==3.0.0
 bddcli==2.9.4
 bddrest==6.2.3
--e git+https://github.com/amirhossein226/GET-POST-and-PUT-using-yhttp.git@864bebceb7d5990c09ca879952f5a2357138efd9#egg=bee
+-e git+https://github.com/amirhossein226/yhttp-app-sample.git@a411a7f1f6f02b934262962001452dded54fc4ea#egg=bee
 build==1.2.2.post1
 certifi==2025.1.31
 charset-normalizer==3.4.1

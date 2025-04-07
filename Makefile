@@ -4,7 +4,7 @@ PYTEST_FLAGS = -vv
 PYDEPS_COMMON = \
 	'coveralls' \
 	'bddrest >= 6.2.3, < 7' \
-	'bddcli >= 2.5.1, < 3' \
+	'bddcli' \
 	'yhttp-dev >= 3.2.4' 
 
 
