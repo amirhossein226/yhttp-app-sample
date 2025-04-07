@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/amirhossein226/yhttp-app-sample/graph/badge.svg?token=1CFQYTAT29)](https://codecov.io/gh/amirhossein226/yhttp-app-sample)
 # A Sample App Using Yhttp Framework  
 **This project implement some common apis using yhttp-framework**
 
