@@ -3,8 +3,8 @@
 
 ### Install Dependencies:
 1. Install and activate [postgresql](https://www.w3schools.com/postgresql/postgresql_install.php) on your system
-**Note:** keep in your minde, after installing and activation of postgresql
-you must do some additional steps to make this project work:
+> [!NOTE]
+> **Note:** keep in your minde, after installing and activation of postgresql you must do some additional steps to make this project work:
 ```
 echo "CREATE USER ${USER} WITH CREATEDB;" | sudo -u postgres psql
 sudo -u postgres psql -c "GRANT postgres TO ${USER};"
