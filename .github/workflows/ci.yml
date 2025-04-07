@@ -27,4 +27,6 @@ jobs:
         with:
           files: ./coverage.xml
           flags: unittests
+          token: d942221f-6f8f-412a-a646-6986084cd63a
+          slug: amirhossein226/yhttp-app-sample
           name: codecov-python
