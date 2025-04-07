@@ -11,8 +11,8 @@ with open(join(dirname(__file__), 'yhttp/bee/__init__.py')) as v_file:
 
 
 dependencies = [
-    'yhttp >= 6.3.1, < 7',
-    'yhttp-pony',
+    'yhttp==7.0.1',
+    'yhttp-sqlalchemy',
 ]
 
 
