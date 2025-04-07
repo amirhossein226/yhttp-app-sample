@@ -81,7 +81,9 @@ def update(req, contact_id):
 @app.route(r'/contacts/(\d+)?')
 @text
 @statuscode(statuses.nocontent)
-def delete(req, contact_id):
+def delete(req, contact_id=None):
+    if not contact_id:
+        raise statuses.badrequest()
     try:
         Contacts.delete(int(contact_id))
     except ObjectNotFound:
