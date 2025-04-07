@@ -2,8 +2,9 @@ from yhttp.core import Application
 from yhttp.ext import sqlalchemy as saext, dbmanager
 from .models import Base
 from .cli.insert_mockup import InsertMockData
+from . import __version__
 
-app = Application()
+app = Application(version=__version__, name='bee')
 
 
 # Add builtin settings here
@@ -40,7 +41,6 @@ saext.install(app, Base)
 
 @app.when
 def ready(app):
-    from . import __version__
     app.version = __version__
 
 
