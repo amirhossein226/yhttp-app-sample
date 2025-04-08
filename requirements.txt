@@ -7,7 +7,7 @@ build==1.2.2.post1
 certifi==2025.1.31
 charset-normalizer==3.4.1
 coverage==7.8.0
-coveralls==4.0.1
+coveralls
 decorator==5.2.1
 docopt==0.6.2
 easycli==1.9.3
@@ -55,7 +55,7 @@ urwid==2.6.16
 urwid_readline==0.15.1
 wcwidth==0.2.13
 yhttp==7.0.1
-yhttp-dbmanager==6.0.2
-yhttp-dev==3.2.4
-yhttp-markdown==2.0.0
-yhttp-sqlalchemy==4.0.1
+yhttp-dbmanager
+yhttp-dev
+yhttp-markdown
+yhttp-sqlalchemy
