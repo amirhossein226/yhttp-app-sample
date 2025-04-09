@@ -1,26 +1,34 @@
-from bddcli import Application as CLIApplication, Given, stdout, stderr, status, when
+from bddcli import Application as CLIApplication, Given,\
+    stdout, stderr, status, when
+from sqlalchemy import select
+import json
+
 
 def test_custom_cli_command():
     cliapp = CLIApplication('bee', 'yhttp.bee:app.climain')
 
     with Given(cliapp, 'db --help'):
-        print(f"db --help: status={status}, stdout='{stdout}'")
         assert status == 0
 
         when('db drop')
-        print(f"db drop: status={status}, stdout='{stdout}', stderr='{stderr}'")
-
         when('db create')
-        print(f"db create: status={status}, stdout='{stdout}', stderr='{stderr}'")
         assert status == 0
         assert stdout == ''
 
         when('db objects create')
-        print(f"db objects create: status={status}, stdout='{stdout}', stderr='{stderr}'")
         assert status == 0
         assert stdout != ''
 
+        from yhttp.bee.basedata import BASE_DATA
         when('db insert-mockup')
-        print(f"db insert-mockup: status={status}, stdout='{stdout}', stderr='{stderr}'")
         assert status == 0
-        assert stdout == ''
+        assert stdout != ''
+
+        inserted_content = json.loads(str(stdout))
+        assert len(inserted_content) == len(BASE_DATA)
+
+        for expected, actual in zip(BASE_DATA, inserted_content):
+            assert expected['name'] == actual['name']
+            assert expected['email'] == actual['email']
+            assert expected['phone'] == actual['phone']
+

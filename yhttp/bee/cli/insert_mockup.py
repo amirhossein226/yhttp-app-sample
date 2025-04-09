@@ -1,3 +1,4 @@
+import json
 import easycli
 
 from ..models import Contacts
@@ -10,6 +11,8 @@ class InsertMockData(easycli.SubCommand):
     def __call__(self, args):
         from ..rollup import app
         app.db.connect()
+
+        created_contacts = []
         with app.db.session() as session:
             for c in BASE_DATA:
                 contact = Contacts(
@@ -18,4 +21,6 @@ class InsertMockData(easycli.SubCommand):
                     phone=c['phone']
                 )
                 session.add(contact)
-                session.commit()
+                created_contacts.append(contact.to_dict())
+            session.commit()
+            print(json.dumps(created_contacts, indent=2))
